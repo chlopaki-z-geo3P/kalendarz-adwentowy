@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎄 Kalendarz Adwentowy z Zadaniem Matematycznym</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <header class="header">
+        <h1><span class="emoji-christmas">🎁</span> Kalendarz Adwentowy z Zadaniem Matematycznym <span class="emoji-christmas">🎄</span></h1>
+        <p>Każdego dnia odkryj nowe matematyczne wyzwanie!</p>
+    </header>
+
+    <div class="calendar-container">
+        </div>
+
+    <div class="countdown-section">
+        <h2>Odliczanie do następnego zadania:</h2>
+        <div id="countdown-timer" class="countdown-timer">00:00:00</div>
+    </div>
+
+    <div id="task-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <h3 id="modal-title">Zadanie Dzień X</h3>
+            <img id="task-image" src="" alt="Obrazek z zadaniem matematycznym" class="task-image">
+            <p class="modal-tip">Kliknij poza obrazkiem, aby zamknąć.</p>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
