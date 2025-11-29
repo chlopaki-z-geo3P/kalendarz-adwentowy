@@ -9,6 +9,7 @@ const ADVENT_START_MONTH = new Date().getMonth();
 // Założyłem, że obrazki będą w folderze 'tasks' i będą się nazywały task_1.jpg, task_2.jpg, itd.
 const TASKS = [
     { day: 1, image: 'tasks/task_1.jpg' },
+    { day: 2, image: 'tasks/task_2.jpg' },
 
 ];
 
@@ -140,3 +141,4 @@ window.addEventListener('click', (event) => {
 updateCountdown();
 
 const countdownInterval = setInterval(updateCountdown, 1000); // Aktualizacja co sekundę
+
