@@ -10,6 +10,29 @@ const ADVENT_START_MONTH = new Date().getMonth();
 const TASKS = [
     { day: 1, image: 'tasks/task_1.jpg' },
     { day: 2, image: 'tasks/task_2.jpg' },
+    { day: 3, image: 'tasks/task_3.jpg' },
+    { day: 4, image: 'tasks/task_4.jpg' },
+    { day: 5, image: 'tasks/task_5.jpg' },
+    { day: 6, image: 'tasks/task_6.jpg' },
+    { day: 7, image: 'tasks/task_7.jpg' },
+    { day: 8, image: 'tasks/task_8.jpg' },
+    { day: 9, image: 'tasks/task_9.jpg' },
+    { day: 10, image: 'tasks/task_10.jpg' },
+    { day: 11, image: 'tasks/task_11.jpg' },
+    { day: 12, image: 'tasks/task_12.jpg' },
+    { day: 13, image: 'tasks/task_13.jpg' },
+    { day: 14, image: 'tasks/task_14.jpg' },
+    { day: 15, image: 'tasks/task_15.jpg' },
+    { day: 16, image: 'tasks/task_16.jpg' },
+    { day: 17, image: 'tasks/task_17.jpg' },
+    { day: 18, image: 'tasks/task_18.jpg' },
+    { day: 19, image: 'tasks/task_19.jpg' },
+    { day: 20, image: 'tasks/task_20.jpg' },
+    { day: 21, image: 'tasks/task_21.jpg' },
+    { day: 22, image: 'tasks/task_22.jpg' },
+    { day: 23, image: 'tasks/task_23.jpg' },
+    { day: 24, image: 'tasks/task_24.jpg' },
+    
 
 ];
 
@@ -141,4 +164,5 @@ window.addEventListener('click', (event) => {
 updateCountdown();
 
 const countdownInterval = setInterval(updateCountdown, 1000); // Aktualizacja co sekundę
+
 
