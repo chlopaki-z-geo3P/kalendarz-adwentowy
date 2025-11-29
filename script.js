@@ -1,12 +1,11 @@
 // --- KONFIGURACJA ---
-// UWAGA: TEN KOD JEST TYMCZASOWY DO TESTOWANIA.
-// Zostaje odblokowane tylko zadanie nr 1 i nr 2.
+// UWAGA: TA WERSJA JEST TYMCZASOWA! ZAWSZE ODBLOKOWUJE WSZYSTKIE 24 OKIENKA DO TESTOWANIA!
 
 const ADVENT_START_YEAR = new Date().getFullYear(); 
-const ADVENT_START_MONTH = new Date().getMonth(); 
+const ADVENT_START_MONTH = 11; // 11 to grudzień (indeksowanie od 0)
 
 // W tablicy musisz podać ŚCIEŻKI do 24 plików graficznych z zadaniami.
-// Założyłem, że obrazki będą w folderze 'tasks' i będą się nazywały task_1.jpg, task_2.jpg, itd.
+// WAŻNE: Upewnij się, że masz folder 'tasks' i pliki task_1.jpg, task_2.jpg itd. (zgodnie z rozszerzeniem, którego używasz)
 const TASKS = [
     { day: 1, image: 'tasks/task_1.jpg' },
     { day: 2, image: 'tasks/task_2.jpg' },
@@ -31,9 +30,7 @@ const TASKS = [
     { day: 21, image: 'tasks/task_21.jpg' },
     { day: 22, image: 'tasks/task_22.jpg' },
     { day: 23, image: 'tasks/task_23.jpg' },
-    { day: 24, image: 'tasks/task_24.jpg' },
-    
-
+    { day: 24, image: 'tasks/task_24.jpg' }
 ];
 
 // --- ELEMENTY DOM ---
@@ -48,11 +45,10 @@ const countdownTimer = document.getElementById('countdown-timer');
 
 /**
  * Zwraca aktualny dzień grudnia lub -1, jeśli nie jest grudzień.
- * TYMCZASOWO ZWRACA 2 DLA TESTÓW!
+ * WAŻNE: W TEJ WERSJI ZAWSZE ZWRACA 24 DLA TESTÓW!
  */
 function getCurrentAdventDay() {
-    // W TYM TRYBIE TESTOWYM WŁĄCZAMY TYLKO 2 PIERWSZE ZADANIA
-    return 2; 
+    return 24; 
 }
 
 const currentAdventDay = getCurrentAdventDay();
@@ -68,17 +64,12 @@ function generateCalendar() {
         windowDiv.classList.add('calendar-window');
         windowDiv.dataset.day = task.day;
         
-        let isLocked = true;
-
-        // Okienka są odblokowane, jeśli numer dnia jest mniejszy lub równy '2' (currentAdventDay)
-        if (task.day <= currentAdventDay) {
-            isLocked = false;
-        }
+        // Ponieważ currentAdventDay jest 24, isLocked będzie zawsze false, odblokowując okienka.
+        let isLocked = task.day > currentAdventDay;
 
         if (isLocked) {
             windowDiv.classList.add('locked');
         } else {
-            // Dodajemy zdarzenie kliknięcia tylko dla okienek otwartych
             windowDiv.addEventListener('click', () => openTask(task.day, task.image));
         }
 
@@ -116,20 +107,9 @@ function openTask(day, imagePath) {
  * Aktualizuje licznik odliczający do północy (otwarcie kolejnego zadania).
  */
 function updateCountdown() {
-    const now = new Date();
-    
-    // Następny dzień (północ bieżącego dnia)
-    const nextDay = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1, 0, 0, 0, 0); 
-    
-    const diff = nextDay - now; 
-
-    const hours = Math.floor(diff / (1000 * 60 * 60));
-    const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-    const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-
-    const format = num => String(num).padStart(2, '0');
-
-    countdownTimer.textContent = `${format(hours)}:${format(minutes)}:${format(seconds)}`;
+    // W trybie testowym, licznik pokazuje "Zakończony"
+    countdownTimer.textContent = 'Kalendarz jest w trybie testowym (wszystkie zadania otwarte).';
+    clearInterval(countdownInterval);
 }
 
 // --- INICJALIZACJA ---
@@ -162,7 +142,4 @@ window.addEventListener('click', (event) => {
 
 // 3. Uruchomienie odliczania
 updateCountdown();
-
 const countdownInterval = setInterval(updateCountdown, 1000); // Aktualizacja co sekundę
-
-
