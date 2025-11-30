@@ -1,220 +1,206 @@
-:root {
-    --blue-dark: #0f1c30; /* Bardzo ciemny granat */
-    --blue-medium: #1a3a60; /* Ciemny granat */
-    --gold: #ffc300; /* Złoty/żółty do nagłówków */
-    --green-light: #52b788; /* Jasna zieleń choinki */
-    --white-soft: #f0f0f0; /* Lekko złamana biel */
-    --window-bg: #e3f2fd; /* Jasny błękit dla okienek */
-    --window-border: #bbdefb; /* Cieńsza granica */
-}
-
+/* --- OGÓLNE STYLI --- */
 body {
-    font-family: 'Roboto', sans-serif;
-    background-color: var(--blue-dark);
-    color: var(--white-soft);
+    font-family: 'Arial', sans-serif;
     margin: 0;
     padding: 0;
+    background-color: #0d47a1; /* Głęboki granatowy kolor tła */
+    color: #fff;
     text-align: center;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding-bottom: 50px;
-    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%"><defs><pattern id="snowflake" patternUnits="userSpaceOnUse" width="40" height="40"><circle cx="20" cy="20" r="2" fill="%23FFFFFF55" /></pattern></defs><rect width="100%" height="100%" fill="url(%23snowflake)" /></svg>');
 }
 
-/* --- NAGŁÓWEK --- */
-.header {
-    padding: 30px 20px 40px;
+/* --- KONTENER GŁÓWNY --- */
+.container {
+    width: 90%;
+    max-width: 1000px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
 }
 
-.header h1 {
+/* --- NAGŁÓWKI --- */
+h1 {
+    color: #ffd700;
     font-size: 2.5em;
-    color: var(--gold);
-    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
     margin-bottom: 5px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
 }
 
-.header p {
-    font-size: 1.1em;
-    color: var(--white-soft);
-    font-weight: 300;
-}
-
-.emoji-christmas {
+h2 {
     font-size: 1.2em;
-    vertical-align: middle;
+    font-style: italic;
+    color: #e0e0e0;
+    margin-bottom: 20px;
 }
 
-/* --- KALENDARZ --- */
+/* --- KONTENER KALENDARZA --- */
 .calendar-container {
     display: grid;
     grid-template-columns: repeat(8, 1fr);
     gap: 15px;
-    width: 90%;
-    max-width: 1200px;
-    margin: 20px auto 50px;
+    margin-top: 30px;
     padding: 20px;
-    background-color: var(--blue-medium); /* Lekkie tło dla czytelności */
+    background-color: rgba(0, 0, 0, 0.2);
     border-radius: 10px;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
 }
 
+/* Dostosowanie do mniejszych ekranów (4 kolumny) */
+@media (max-width: 768px) {
+    .calendar-container {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+/* --- OKIENKA KALENDARZA --- */
 .calendar-window {
-    background-color: var(--window-bg);
-    border: 3px solid var(--window-border);
-    border-radius: 8px;
-    padding: 10px;
-    cursor: pointer;
-    transition: transform 0.2s, box-shadow 0.2s, opacity 0.3s;
-    user-select: none;
-    aspect-ratio: 1 / 1; /* Kwadratowe okienka */
+    height: 100px;
+    aspect-ratio: 1 / 1;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+    transition: all 0.3s ease;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    position: relative;
+    overflow: hidden;
+    color: #fff;
+    user-select: none;
 }
 
-.calendar-window:hover:not(.locked) {
-    transform: translateY(-3px);
-    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
-}
-
-.window-number {
-    font-size: 2em;
-    font-weight: 700;
-    color: var(--blue-dark);
-    margin-bottom: 5px;
-}
-
-.window-label {
-    font-size: 0.9em;
-    color: var(--blue-dark);
-    font-weight: 400;
-}
-
-.tree-icon {
-    font-size: 1.5em;
-    color: var(--green-light);
-    margin-top: 5px;
-}
-
-/* Style dla zablokowanego okienka */
-.locked {
-    opacity: 0.6;
+/* 1. ZABLOKOWANE OKIENKO (PREZENT - Domyślne tło) */
+.calendar-window.locked {
+    background-color: #3f51b5; /* Ciemny niebieski/fioletowy */
     cursor: not-allowed;
-    background-color: #bbdefb; /* Jaśniejszy kolor dla zablokowanych */
+    opacity: 0.95;
 }
 
-/* Style dla otwartego okienka */
-.open {
-    background-color: var(--green-light);
-    color: var(--white-soft);
+/* 2. ODBLOKOWANE OKIENKO (Choinka - Zielone tło) */
+.calendar-window:not(.locked) {
+    background-color: #66bb6a; /* Piękny zielony */
+    cursor: pointer;
+    opacity: 1;
 }
 
-.open .window-number, .open .window-label {
-    color: var(--white-soft);
+/* Efekt najechania myszą na aktywne okienko */
+.calendar-window:not(.locked):hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.6);
 }
 
-/* --- ODILCZANIE --- */
-.countdown-section {
-    margin-top: 30px;
+/* 3. STYL DLA NUMERU DNIA */
+.calendar-window .window-number {
+    font-size: 32px;
+    font-weight: bold;
+    margin-top: 5px;
+    color: #fff;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+    position: relative;
+    z-index: 2;
 }
 
-.countdown-section h2 {
-    color: var(--gold);
-    font-size: 1.4em;
-    margin-bottom: 10px;
+/* 4. STYL DLA IKONY (Choinka/Prezent z JS) */
+.calendar-window .window-icon {
+    font-size: 30px; 
+    margin-bottom: 5px;
+    position: relative;
+    z-index: 2;
 }
 
-.countdown-timer {
-    font-size: 3em;
-    font-weight: 700;
-    color: var(--gold);
-    background-color: var(--blue-medium);
-    padding: 15px 30px;
-    border-radius: 5px;
-    display: inline-block;
-    letter-spacing: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+/* Styl dla etykiety 'Zadanie' */
+.calendar-window .window-label {
+    font-size: 0.9em;
+    font-weight: 500;
+    color: #e0e0e0;
+    position: relative;
+    z-index: 2;
 }
 
-/* --- MODAL (POPU-UP) --- */
+/* Styl dla już otwartego okienka */
+.calendar-window.open {
+    background-color: #4caf50; /* Ciemniejsza zieleń po otwarciu */
+    box-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
+}
+
+/* --- MODAL (OKNO Z ZADANIEM) --- */
 .modal {
-    display: none; /* Ukryty domyślnie */
+    display: none;
     position: fixed;
-    z-index: 100;
+    z-index: 100; 
     left: 0;
     top: 0;
     width: 100%;
     height: 100%;
     overflow: auto;
-    background-color: rgba(0, 0, 0, 0.8); /* Ciemne tło */
+    background-color: rgba(0, 0, 0, 0.6);
     backdrop-filter: blur(5px);
 }
 
 .modal-content {
-    background-color: var(--white-soft);
-    margin: 10% auto; /* Wyśrodkowanie w pionie */
+    background-color: #fff;
+    margin: 5% auto; 
     padding: 20px;
-    border-radius: 10px;
+    border: 1px solid #888;
     width: 90%;
-    max-width: 700px; /* Maksymalna szerokość obrazka */
+    max-width: 700px;
+    border-radius: 10px;
     position: relative;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
-    color: var(--blue-dark);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.9);
+    color: #333;
 }
 
-.modal-title {
-    color: var(--blue-dark);
-    margin-top: 0;
+.modal-content h3 {
+    color: #c62828;
+    border-bottom: 2px solid #c62828;
+    padding-bottom: 5px;
 }
 
 .close-button {
-    color: var(--blue-dark);
+    color: #aaa;
     float: right;
     font-size: 28px;
     font-weight: bold;
-    cursor: pointer;
-    transition: color 0.2s;
 }
 
 .close-button:hover,
 .close-button:focus {
-    color: #ff0000;
+    color: #000;
     text-decoration: none;
+    cursor: pointer;
 }
 
-.task-image {
-    width: 100%;
+#task-image {
+    max-width: 100%;
     height: auto;
     border-radius: 5px;
-    display: block;
-    margin: 15px 0;
+    margin-top: 15px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
 }
 
-.modal-tip {
-    font-style: italic;
-    font-size: 0.8em;
-    color: #666;
+/* --- LICZNIK ODLICZAJĄCY --- */
+.countdown {
+    margin-top: 40px;
+    padding: 15px;
+    background-color: rgba(0, 0, 0, 0.4);
+    border-radius: 10px;
+    display: inline-block;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 }
 
-/* --- Responsywność --- */
-@media (max-width: 900px) {
-    .calendar-container {
-        grid-template-columns: repeat(6, 1fr);
-    }
+.countdown p {
+    font-size: 1.2em;
+    margin-bottom: 5px;
+    color: #fff;
 }
 
-@media (max-width: 600px) {
-    .calendar-container {
-        grid-template-columns: repeat(4, 1fr);
-    }
-    .header h1 {
-        font-size: 2em;
-    }
-    .countdown-timer {
-        font-size: 2em;
-    }
+#countdown-timer {
+    font-size: 2.5em;
+    color: #ffeb3b; 
+    font-weight: bold;
+    letter-spacing: 2px;
 }
