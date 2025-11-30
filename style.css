@@ -3,8 +3,7 @@ body {
     font-family: 'Arial', sans-serif;
     margin: 0;
     padding: 0;
-    /* ⬅️ ZMIENIONE: Głęboki granatowy kolor tła */
-    background-color: #0d47a1; 
+    background-color: #0d47a1; /* Głęboki granatowy kolor tła */
     color: #fff;
     text-align: center;
     min-height: 100vh;
@@ -19,8 +18,7 @@ body {
     max-width: 1000px;
     margin: 20px auto;
     padding: 20px;
-    /* Przywrócone: Lekko przezroczyste tło na granatowym */
-    background-color: rgba(255, 255, 255, 0.1);
+    background-color: rgba(255, 255, 255, 0.1); /* Lekko przezroczyste tło na granatowym */
     border-radius: 15px;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
 }
@@ -77,16 +75,24 @@ h2 {
 
 /* 1. ZABLOKOWANE OKIENKO (PREZENT 🎁) */
 .calendar-window.locked {
-    background-color: #3f51b5; /* Ciemny niebieski/fioletowy */
+    background-color: #ececec; /* Jasnoszary/prawie biały, jak na Twoim zrzucie */
     cursor: not-allowed;
     opacity: 0.95;
+    color: #333; /* Ciemny tekst dla jasnego tła */
 }
 
-/* 2. ODBLOKOWANE OKIENKO (CHOINKA 🎄) */
+/* 2. ODBLOKOWANE OKIENKO (TYLKO NUMER DNIA) */
 .calendar-window:not(.locked) {
-    background-color: #66bb6a; /* Piękny zielony */
+    background-color: #0d47a1; /* Kolor strony - "świeci się" */
     cursor: pointer;
     opacity: 1;
+}
+
+/* 3. OKIENKO OTWARTE (PO KLIKNIĘCIU) */
+.calendar-window.open {
+    background-color: #66bb6a; /* Zielony kolor po otwarciu */
+    box-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
+    color: #fff; /* Biały tekst dla zielonego tła */
 }
 
 /* Efekt najechania myszą na aktywne okienko */
@@ -95,39 +101,68 @@ h2 {
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.6);
 }
 
-/* 3. STYL DLA NUMERU DNIA */
+/* STYL DLA NUMERU DNIA (globalnie) */
 .calendar-window .window-number {
     font-size: 32px;
     font-weight: bold;
-    margin-top: 10px; 
-    color: #fff;
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
     position: relative;
     z-index: 2;
 }
 
-/* 4. STYL DLA IKONY (Choinka/Prezent) */
+/* Pozycjonowanie numeru dla zablokowanego okienka (pod prezentem) */
+.calendar-window.locked .window-number {
+    margin-top: 5px; /* Odległość od ikony prezentu */
+    color: #333; /* Ciemny numer dla jasnego tła */
+}
+
+/* Pozycjonowanie numeru dla odblokowanego okienka (na środku) */
+.calendar-window:not(.locked) .window-number {
+    margin-top: 0; /* Centrujemy, gdy jest tylko numer */
+    color: #fff; /* Biały numer dla granatowego tła */
+}
+
+/* STYL DLA IKONY (Choinka/Prezent) */
 .calendar-window .window-icon {
     font-size: 30px; 
     position: relative;
     z-index: 2;
-    margin-bottom: -15px;
+    margin-bottom: -5px; /* Przesunięcie ikony nad numer */
 }
 
-/* Styl dla etykiety 'Zadanie' */
-.calendar-window .window-label {
+/* Ukrycie ikony dla odblokowanych okienek */
+.calendar-window:not(.locked) .window-icon {
+    display: none;
+}
+
+/* Ukrycie etykiety "Zadanie" dla odblokowanych okienek */
+.calendar-window:not(.locked) .window-label {
+    display: none;
+}
+
+/* Styl dla etykiety 'Zadanie' dla ZABLOKOWANYCH okienek */
+.calendar-window.locked .window-label {
     font-size: 0.9em;
     font-weight: 500;
-    color: #e0e0e0;
+    color: #666; /* Ciemniejszy kolor dla jasnego tła */
     position: relative;
     z-index: 2;
     margin-top: 0px; 
 }
 
-/* Styl dla już otwartego okienka */
-.calendar-window.open {
-    background-color: #4caf50; /* Ciemniejsza zieleń po otwarciu */
-    box-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
+
+/* --- SPECJALNY STYL DLA DNIA 24 (CZERWONY) --- */
+.calendar-window[data-day="24"].locked {
+    background-color: #c62828; /* Czerwony kolor */
+    color: #fff; /* Biały tekst dla czerwonego tła */
+}
+
+.calendar-window[data-day="24"].locked .window-number {
+    color: #fff;
+}
+
+.calendar-window[data-day="24"].locked .window-label {
+    color: #eee;
 }
 
 /* --- MODAL (OKNO Z ZADANIEM) --- */
