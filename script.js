@@ -1,11 +1,10 @@
 // --- KONFIGURACJA ---
-// UWAGA: TA WERSJA JEST TYMCZASOWA! ZAWSZE ODBLOKOWUJE WSZYSTKIE 24 OKIENKA DO TESTOWANIA!
+// WERSJA FINALNA Z BLOKADĄ DAT I ODCZKIEM
 
 const ADVENT_START_YEAR = new Date().getFullYear(); 
 const ADVENT_START_MONTH = 11; // 11 to grudzień (indeksowanie od 0)
 
 // W tablicy musisz podać ŚCIEŻKI do 24 plików graficznych z zadaniami.
-// WAŻNE: Upewnij się, że masz folder 'tasks' i pliki task_1.jpg, task_2.jpg itd. (zgodnie z rozszerzeniem, którego używasz)
 const TASKS = [
     { day: 1, image: 'tasks/task_1.jpg' },
     { day: 2, image: 'tasks/task_2.jpg' },
@@ -45,10 +44,14 @@ const countdownTimer = document.getElementById('countdown-timer');
 
 /**
  * Zwraca aktualny dzień grudnia lub -1, jeśli nie jest grudzień.
- * WAŻNE: W TEJ WERSJI ZAWSZE ZWRACA 24 DLA TESTÓW!
  */
 function getCurrentAdventDay() {
-    return 23; 
+    const today = new Date();
+    // Sprawdzamy, czy to grudzień (miesiąc 11) i czy to rok, dla którego kalendarz jest przeznaczony.
+    if (today.getMonth() === ADVENT_START_MONTH && today.getFullYear() === ADVENT_START_YEAR && today.getDate() <= 24) {
+        return today.getDate();
+    }
+    return -1;
 }
 
 const currentAdventDay = getCurrentAdventDay();
@@ -64,18 +67,26 @@ function generateCalendar() {
         windowDiv.classList.add('calendar-window');
         windowDiv.dataset.day = task.day;
         
-        // Ponieważ currentAdventDay jest 24, isLocked będzie zawsze false, odblokowując okienka.
-        let isLocked = task.day > currentAdventDay;
+        let isLocked = true;
+
+        // Okienka są odblokowane, jeśli numer dnia jest mniejszy lub równy aktualnemu dniu Adwentu
+        if (task.day <= currentAdventDay) {
+            isLocked = false;
+        }
 
         if (isLocked) {
             windowDiv.classList.add('locked');
         } else {
+            // Dodajemy zdarzenie kliknięcia tylko dla okienek otwartych
             windowDiv.addEventListener('click', () => openTask(task.day, task.image));
         }
 
+        // ⬅️ WAŻNE: Dynamiczna ikona: Prezent (🎁) dla zablokowanych, Choinka (🎄) dla odblokowanych
+        const icon = isLocked ? '🎁' : '🎄';
+
         // Zawartość okienka
         windowDiv.innerHTML = `
-            <span class="tree-icon">🎄</span>
+            <span class="window-icon">${icon}</span>
             <span class="window-number">${task.day}</span>
             <span class="window-label">Zadanie</span>
         `;
@@ -107,9 +118,26 @@ function openTask(day, imagePath) {
  * Aktualizuje licznik odliczający do północy (otwarcie kolejnego zadania).
  */
 function updateCountdown() {
-    // W trybie testowym, licznik pokazuje "Zakończony"
-    countdownTimer.textContent = 'Kalendarz jest w trybie testowym (wszystkie zadania otwarte).';
-    clearInterval(countdownInterval);
+    if (currentAdventDay === -1 || currentAdventDay >= 24) {
+        countdownTimer.textContent = 'Kalendarz jest już zakończony!';
+        clearInterval(countdownInterval);
+        return;
+    }
+
+    const now = new Date();
+    
+    // Następny dzień (północ bieżącego dnia)
+    const nextDay = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1, 0, 0, 0, 0); 
+    
+    const diff = nextDay - now; 
+
+    const hours = Math.floor(diff / (1000 * 60 * 60));
+    const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+    const format = num => String(num).padStart(2, '0');
+
+    countdownTimer.textContent = `${format(hours)}:${format(minutes)}:${format(seconds)}`;
 }
 
 // --- INICJALIZACJA ---
@@ -143,4 +171,3 @@ window.addEventListener('click', (event) => {
 // 3. Uruchomienie odliczania
 updateCountdown();
 const countdownInterval = setInterval(updateCountdown, 1000); // Aktualizacja co sekundę
-
