@@ -20,29 +20,7 @@ body {
     flex-direction: column;
     align-items: center;
     padding-bottom: 50px;
-
-    /* --- ŚWIĄTECZNE TŁA --- */
-    background-image: 
-        url('santa_sleigh.png'),    /* Mikołaj z saniami */
-        url('christmas_tree.png'),  /* Choinka */
-        url('gifts.png'),           /* Prezenty */
-        url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%"><defs><pattern id="snowflake" patternUnits="userSpaceOnUse" width="40" height="40"><circle cx="20" cy="20" r="2" fill="%23FFFFFF55" /></pattern></defs><rect width="100%" height="100%" fill="url(%23snowflake)" /></svg>'); /* Płatki śniegu */
-    background-position: 
-        right top,  /* Mikołaj: góra prawy róg */
-        left 20px bottom 20px, /* Choinka: dół lewy róg, lekko w górę */
-        right 20px bottom 20px, /* Prezenty: dół prawy róg, lekko w górę */
-        center center; /* Płatki śniegu: pokrywają całość */
-    background-size: 
-        250px auto,  /* Mikołaj */
-        200px auto,  /* Choinka */
-        200px auto,  /* Prezenty */
-        auto auto; /* Płatki śniegu */
-    background-repeat: 
-        no-repeat, 
-        no-repeat, 
-        no-repeat, 
-        repeat;    
-    /* --- KONIEC ŚWIĄTECZNYCH TŁA --- */
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%"><defs><pattern id="snowflake" patternUnits="userSpaceOnUse" width="40" height="40"><circle cx="20" cy="20" r="2" fill="%23FFFFFF55" /></pattern></defs><rect width="100%" height="100%" fill="url(%23snowflake)" /></svg>');
 }
 
 /* --- NAGŁÓWEK --- */
