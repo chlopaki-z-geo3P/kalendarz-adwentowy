@@ -1,8 +1,8 @@
 // --- KONFIGURACJA ---
-// WERSJA TESTOWA: Wszystkie dni są natychmiast odblokowane do podglądu.
+// WERSJA PRODUKCYJNA: Blokada daty i odliczanie czasu.
 
 const ADVENT_START_YEAR = new Date().getFullYear(); 
-const ADVENT_START_MONTH = 11; // 11 to grudzień
+const ADVENT_START_MONTH = 11; // 11 to grudzień (indeksowanie od 0)
 
 // W tablicy musisz podać ŚCIEŻKI do 24 plików graficznych z zadaniami.
 const TASKS = [
@@ -41,11 +41,23 @@ const modalTitle = document.getElementById('modal-title');
 const countdownTimer = document.getElementById('countdown-timer');
 const countdownSectionTitle = document.querySelector('.countdown h2');
 
+// --- LOGIKA DATY ---
 
-// --- LOGIKA DATY (POMIJAMY) ---
-// ⬅️ W trybie testowym ustawiamy, że aktualny dzień to 24, aby wszystko odblokować.
-const currentAdventDay = 24; 
+/**
+ * Zwraca aktualny dzień grudnia (1-24), 0 jeśli jest listopad, lub -1 jeśli po 24 grudnia.
+ */
+function getCurrentAdventDay() {
+    const today = new Date();
+    if (today.getMonth() === ADVENT_START_MONTH && today.getFullYear() === ADVENT_START_YEAR && today.getDate() <= 24) {
+        return today.getDate();
+    }
+    if (today.getMonth() < ADVENT_START_MONTH && today.getFullYear() === ADVENT_START_YEAR) {
+        return 0; 
+    }
+    return -1; // Po 24 grudnia
+}
 
+const currentAdventDay = getCurrentAdventDay();
 
 // --- FUNKCJE ---
 
@@ -60,7 +72,7 @@ function generateCalendar() {
         
         let isLocked = true;
 
-        // ⬅️ W trybie testowym zawsze odblokowujemy
+        // Okienka są odblokowane, jeśli numer dnia jest mniejszy lub równy aktualnemu dniu Adwentu
         if (task.day <= currentAdventDay) {
             isLocked = false;
         }
@@ -68,12 +80,12 @@ function generateCalendar() {
         if (isLocked) {
             windowDiv.classList.add('locked');
         } else {
-            // Dodajemy zdarzenie kliknięcia dla wszystkich okienek
+            // Dodajemy zdarzenie kliknięcia tylko dla okienek otwartych
             windowDiv.addEventListener('click', () => openTask(task.day, task.image));
         }
 
-        // Ikona jest zawsze Choinka (🎄) w trybie testowym
-        const icon = '🎄'; 
+        // DYNAMICZNA IKONA: Prezent (🎁) dla zablokowanych, Choinka (🎄) dla odblokowanych
+        const icon = isLocked ? '🎁' : '🎄';
 
         // Zawartość okienka
         windowDiv.innerHTML = `
@@ -88,15 +100,12 @@ function generateCalendar() {
 
 /**
  * Obsługuje otwieranie zadania w modalu.
- * @param {number} day Numer dnia zadania.
- * @param {string} imagePath Ścieżka do obrazka zadania.
  */
 function openTask(day, imagePath) {
     modalTitle.textContent = `Zadanie Dzień ${day}`;
     taskImage.src = imagePath;
     modal.style.display = 'block';
 
-    // W trybie testowym możemy zapamiętywać w localStorage, ale nie jest to krytyczne
     localStorage.setItem(`advent_task_${day}_open`, 'true');
 
     const windowDiv = document.querySelector(`.calendar-window[data-day="${day}"]`);
@@ -107,12 +116,46 @@ function openTask(day, imagePath) {
 }
 
 /**
- * Zmienia licznik na komunikat o trybie testowym.
+ * Aktualizuje licznik odliczający do otwarcia kolejnego zadania.
  */
 function updateCountdown() {
-    countdownSectionTitle.textContent = 'Informacja:';
-    countdownTimer.textContent = 'Kalendarz jest w trybie podglądu (wszystkie dni otwarte).';
-    clearInterval(countdownInterval);
+    const now = new Date();
+    let targetTime;
+    let message = 'Odliczanie do następnego zadania:';
+
+    if (now.getMonth() === ADVENT_START_MONTH && now.getDate() < 24) {
+        // Jest grudzień: Odliczamy do północy bieżącego dnia
+        targetTime = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1, 0, 0, 0, 0); 
+    } else if (now.getMonth() < ADVENT_START_MONTH && now.getFullYear() === ADVENT_START_YEAR) {
+        // Jest listopad: Odliczamy do 1 grudnia
+        targetTime = new Date(now.getFullYear(), ADVENT_START_MONTH, 1, 0, 0, 0, 0); 
+        message = 'Odliczanie do startu kalendarza:';
+    } else {
+        // Kalendarz jest zakończony
+        countdownTimer.textContent = 'Kalendarz jest już zakończony!';
+        clearInterval(countdownInterval);
+        return;
+    }
+
+    const diff = targetTime - now; 
+
+    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+    const format = num => String(num).padStart(2, '0');
+    
+    // Używamy dni tylko jeśli jest to odliczanie do 1 grudnia
+    if (days > 0) {
+        countdownTimer.textContent = `${days} dni, ${format(hours)}:${format(minutes)}:${format(seconds)}`;
+    } else {
+        countdownTimer.textContent = `${format(hours)}:${format(minutes)}:${format(seconds)}`;
+    }
+
+    if (countdownSectionTitle) {
+        countdownSectionTitle.textContent = message;
+    }
 }
 
 // --- INICJALIZACJA ---
@@ -143,7 +186,6 @@ window.addEventListener('click', (event) => {
     }
 });
 
-// 3. Uruchomienie komunikatu testowego
+// 3. Uruchomienie odliczania
 updateCountdown();
-// Nie uruchamiamy interwału, bo nie odliczamy czasu
-const countdownInterval = null;
+const countdownInterval = setInterval(updateCountdown, 1000);
