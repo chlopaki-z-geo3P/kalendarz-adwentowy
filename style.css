@@ -3,7 +3,14 @@ body {
     font-family: 'Arial', sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #0d47a1; /* Głęboki granatowy kolor tła */
+    /* ⬅️ ZMIENIONE: Dodane tło z wzorem */
+    background-color: #1a2233; /* Główny kolor tła pod wzór (ciemny granat/szarość) */
+    background-image: url('dots-pattern.png'); /* Ścieżka do pliku z wzorem kropek */
+    background-repeat: repeat; /* Powtarza wzór, aby pokryć całą stronę */
+    background-size: 20px 20px; /* Rozmiar pojedynczego elementu wzoru, dostosuj wg potrzeb */
+    /* Jeśli wzór jest biały na przezroczystym, a chcemy go ciemniejszego: */
+    /* filter: brightness(0.8); */
+
     color: #fff;
     text-align: center;
     min-height: 100vh;
@@ -83,7 +90,7 @@ h2 {
 
 /* 2. ODBLOKOWANE OKIENKO (TYLKO NUMER DNIA) */
 .calendar-window:not(.locked) {
-    background-color: #0d47a1; /* Kolor strony - "świeci się" */
+    background-color: #0d47a1; /* Kolor granatowy - "świeci się" na tle strony */
     cursor: pointer;
     opacity: 1;
 }
@@ -122,7 +129,7 @@ h2 {
     color: #fff; /* Biały numer dla granatowego tła */
 }
 
-/* STYL DLA IKONY (Choinka/Prezent) */
+/* STYL DLA IKONY (Prezent) */
 .calendar-window .window-icon {
     font-size: 30px; 
     position: relative;
