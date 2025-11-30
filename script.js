@@ -84,15 +84,20 @@ function generateCalendar() {
             windowDiv.addEventListener('click', () => openTask(task.day, task.image));
         }
 
-        // DYNAMICZNA IKONA: Prezent (🎁) dla zablokowanych, Choinka (🎄) dla odblokowanych
-        const icon = isLocked ? '🎁' : '🎄';
-
-        // Zawartość okienka
-        windowDiv.innerHTML = `
-            <span class="window-icon">${icon}</span>
-            <span class="window-number">${task.day}</span>
-            <span class="window-label">Zadanie</span>
-        `;
+        // DYNAMICZNA KONTENT:
+        // Zablokowane: Prezent i numer pod spodem + "Zadanie"
+        // Odblokowane: Tylko numer
+        if (isLocked) {
+            windowDiv.innerHTML = `
+                <span class="window-icon">🎁</span>
+                <span class="window-number">${task.day}</span>
+                <span class="window-label">Zadanie</span>
+            `;
+        } else {
+            windowDiv.innerHTML = `
+                <span class="window-number">${task.day}</span>
+            `;
+        }
         
         calendarContainer.appendChild(windowDiv);
     });
@@ -112,6 +117,8 @@ function openTask(day, imagePath) {
     if (windowDiv) {
         windowDiv.classList.add('open');
         windowDiv.classList.remove('locked');
+        // Usunięcie ikon i tekstu "Zadanie" po otwarciu
+        windowDiv.innerHTML = `<span class="window-number">${day}</span>`;
     }
 }
 
@@ -169,6 +176,8 @@ document.addEventListener('DOMContentLoaded', () => {
             const windowDiv = document.querySelector(`.calendar-window[data-day="${task.day}"]`);
             if (windowDiv) {
                 windowDiv.classList.add('open');
+                windowDiv.classList.remove('locked'); // Upewniamy się, że nie jest zablokowany
+                windowDiv.innerHTML = `<span class="window-number">${task.day}</span>`; // Zmieniamy zawartość
             }
         }
     });
