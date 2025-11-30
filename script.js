@@ -1,5 +1,5 @@
 // --- KONFIGURACJA ---
-// WERSJA FINALNA Z BLOKADĄ DAT I ODCZKIEM
+// WERSJA FINALNA Z BLOKADĄ DAT I DYNAMICZNYMI IKONAMI
 
 const ADVENT_START_YEAR = new Date().getFullYear(); 
 const ADVENT_START_MONTH = 11; // 11 to grudzień (indeksowanie od 0)
@@ -81,7 +81,7 @@ function generateCalendar() {
             windowDiv.addEventListener('click', () => openTask(task.day, task.image));
         }
 
-        // ⬅️ WAŻNE: Dynamiczna ikona: Prezent (🎁) dla zablokowanych, Choinka (🎄) dla odblokowanych
+        // ⬅️ DYNAMICZNA IKONA: Prezent (🎁) dla zablokowanych, Choinka (🎄) dla odblokowanych
         const icon = isLocked ? '🎁' : '🎄';
 
         // Zawartość okienka
