@@ -3,13 +3,17 @@ body {
     font-family: 'Arial', sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #0d47a1; /* Głęboki granatowy kolor tła */
+    /* ⬅️ Zmienione: Szaro-niebieskie tło strony */
+    background-color: #364052; 
     color: #fff;
     text-align: center;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
     align-items: center;
+    /* Dodajemy delikatny wzór, jeśli był używany */
+    /* background-image: url('tile.png'); 
+    background-repeat: repeat; */
 }
 
 /* --- KONTENER GŁÓWNY --- */
@@ -18,7 +22,7 @@ body {
     max-width: 1000px;
     margin: 20px auto;
     padding: 20px;
-    background-color: rgba(255, 255, 255, 0.1);
+    background-color: rgba(0, 0, 0, 0.2); /* Przezroczyste tło kontenera */
     border-radius: 15px;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
 }
@@ -45,11 +49,11 @@ h2 {
     gap: 15px;
     margin-top: 30px;
     padding: 20px;
-    background-color: rgba(0, 0, 0, 0.2);
+    background-color: rgba(255, 255, 255, 0.1); /* Jasne tło kontenera okienek */
     border-radius: 10px;
 }
 
-/* Dostosowanie do mniejszych ekranów (4 kolumny) */
+/* Dostosowanie do mniejszych ekranów */
 @media (max-width: 768px) {
     .calendar-container {
         grid-template-columns: repeat(4, 1fr);
@@ -73,14 +77,15 @@ h2 {
     user-select: none;
 }
 
-/* 1. ZABLOKOWANE OKIENKO (PREZENT - Domyślne tło) */
+/* 1. ZABLOKOWANE OKIENKO (PREZENT 🎁) */
 .calendar-window.locked {
-    background-color: #3f51b5; /* Ciemny niebieski/fioletowy */
+    /* ⬅️ Kolor zablokowanych okienek z Twojego działającego zrzutu */
+    background-color: #3f51b5; 
     cursor: not-allowed;
     opacity: 0.95;
 }
 
-/* 2. ODBLOKOWANE OKIENKO (Choinka - Zielone tło) */
+/* 2. ODBLOKOWANE OKIENKO (CHOINKA 🎄) */
 .calendar-window:not(.locked) {
     background-color: #66bb6a; /* Piękny zielony */
     cursor: pointer;
@@ -97,19 +102,21 @@ h2 {
 .calendar-window .window-number {
     font-size: 32px;
     font-weight: bold;
-    margin-top: 5px;
+    /* Przesunięcie w dół, aby zrobić miejsce dla ikony */
+    margin-top: 10px; 
     color: #fff;
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
     position: relative;
     z-index: 2;
 }
 
-/* 4. STYL DLA IKONY (Choinka/Prezent z JS) */
+/* 4. STYL DLA IKONY (Choinka/Prezent) */
 .calendar-window .window-icon {
     font-size: 30px; 
-    margin-bottom: 5px;
     position: relative;
     z-index: 2;
+    /* ⬅️ Umieszczenie ikony na górze numeru dnia */
+    margin-bottom: -15px;
 }
 
 /* Styl dla etykiety 'Zadanie' */
@@ -119,6 +126,8 @@ h2 {
     color: #e0e0e0;
     position: relative;
     z-index: 2;
+    /* ⬅️ Pozycja pod numerem dnia */
+    margin-top: 0px; 
 }
 
 /* Styl dla już otwartego okienka */
