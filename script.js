@@ -48,7 +48,7 @@ const countdownTimer = document.getElementById('countdown-timer');
  * WAŻNE: W TEJ WERSJI ZAWSZE ZWRACA 24 DLA TESTÓW!
  */
 function getCurrentAdventDay() {
-    return 24; 
+    return 23; 
 }
 
 const currentAdventDay = getCurrentAdventDay();
@@ -143,3 +143,4 @@ window.addEventListener('click', (event) => {
 // 3. Uruchomienie odliczania
 updateCountdown();
 const countdownInterval = setInterval(updateCountdown, 1000); // Aktualizacja co sekundę
+
