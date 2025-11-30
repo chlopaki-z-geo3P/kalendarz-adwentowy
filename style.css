@@ -10,7 +10,7 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    /* Dodajemy wzór tła (opcjonalnie: wgraj plik tile.png) */
+    /* OpCjONALNIE: Dodaj wzór tła, jeśli go używałeś */
     /* background-image: url('tile.png'); 
     background-repeat: repeat; */
 }
@@ -73,24 +73,21 @@ h2 {
     position: relative;
     overflow: hidden;
     color: #fff;
-    user-select: none; /* Zapobieganie zaznaczeniu tekstu */
+    user-select: none;
 }
 
-/* 1. ZABLOKOWANE OKIENKO (PREZENT JAKO TŁO) */
+/* 1. ZABLOKOWANE OKIENKO (DOMYŚLNY STYL) */
 .calendar-window.locked {
-    background-color: transparent; 
-    background-image: url('gift_icon.png'); /* ⬅️ Używa wgranego pliku prezentu */
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
+    background-color: #3f51b5; /* Ciemniejszy, niebieski kolor dla zablokowanych */
     cursor: not-allowed;
-    opacity: 0.95; 
+    opacity: 0.8;
 }
 
 /* 2. ODBLOKOWANE OKIENKO (DZIEŃ JUŻ OTWARTY/AKTUALNY) */
 .calendar-window:not(.locked) {
     background-color: #66bb6a; /* Piękny zielony */
     cursor: pointer;
+    opacity: 1;
 }
 
 /* Efekt najechania myszą na aktywne okienko */
@@ -99,54 +96,32 @@ h2 {
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.6);
 }
 
-/* 3. STYL DLA NUMERU DNIA (NA PREZENCIE LUB W ŚRODKU) */
+/* 3. STYL DLA NUMERU DNIA */
 .calendar-window .window-number {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-size: 36px; 
+    font-size: 32px;
+    font-weight: bold;
+    margin-top: 5px;
+    color: #fff;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+    position: relative;
     z-index: 2;
-    font-weight: 900;
 }
 
-/* Numer dnia na zablokowanym prezencie (biały/jasny) */
-.calendar-window.locked .window-number {
-    color: #fff; 
-    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.9);
-}
-
-/* Numer dnia na odblokowanym/otwartym tle (ciemny) */
-.calendar-window:not(.locked) .window-number {
-    color: #1a237e; 
-    text-shadow: none;
-}
-
-/* 4. UKRYWANIE/STYLE INNYCH ELEMENTÓW */
-
-/* Ukrywamy ikonę emoji i etykietę zadania w zablokowanym okienku */
-.calendar-window.locked .window-icon, 
-.calendar-window.locked .window-label {
-    display: none;
-}
-
-/* Styl dla małej choinki w odblokowanym okienku */
-.calendar-window:not(.locked) .window-icon {
-    font-size: 20px;
-    color: #ffd700; /* Złoty kolor */
-    position: absolute;
-    top: 5px;
-    left: 5px;
+/* 4. STYL DLA IKONY (Choinka/Prezent z JS) */
+.calendar-window .window-icon {
+    font-size: 30px; /* Duża ikona */
+    margin-bottom: 5px;
+    position: relative;
+    z-index: 2;
 }
 
 /* Styl dla etykiety 'Zadanie' */
 .calendar-window .window-label {
-    position: absolute;
-    bottom: 5px;
-    font-size: 0.8em;
-    font-weight: bold;
-    color: #1a237e;
-    text-shadow: 0 0 1px rgba(255, 255, 255, 0.5);
+    font-size: 0.9em;
+    font-weight: 500;
+    color: #e0e0e0;
+    position: relative;
+    z-index: 2;
 }
 
 /* Styl dla już otwartego okienka */
@@ -159,7 +134,7 @@ h2 {
 .modal {
     display: none; /* Domyślnie ukryty */
     position: fixed;
-    z-index: 100; /* Na wierzchu wszystkiego */
+    z-index: 100; 
     left: 0;
     top: 0;
     width: 100%;
@@ -228,7 +203,7 @@ h2 {
 
 #countdown-timer {
     font-size: 2.5em;
-    color: #ffeb3b; /* Żółty/złoty kolor dla licznika */
+    color: #ffeb3b; 
     font-weight: bold;
     letter-spacing: 2px;
 }
