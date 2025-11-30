@@ -9,32 +9,33 @@
 </head>
 <body>
 
-    <header class="header">
-        <h1><span class="emoji-christmas">🎁</span> Kalendarz Adwentowy z Zadaniem Matematycznym <span class="emoji-christmas">🎄</span></h1>
-        <p>Każdego dnia odkryj nowe matematyczne wyzwanie!</p>
-    </header>
+    <div class="container">
+        
+        <header>
+            <h1><span class="emoji-christmas">🎁</span> Kalendarz Adwentowy z Zadaniem Matematycznym <span class="emoji-christmas">🎄</span></h1>
+            <h2>Każdego dnia odkryj nowe matematyczne wyzwanie!</h2>
+        </header>
 
-    <div class="calendar-container">
+        <div class="calendar-container">
+            </div>
+
+        <div class="countdown">
+            <h2>Odliczanie do następnego zadania:</h2>
+            <div id="countdown-timer">00:00:00</div>
         </div>
 
-    <div class="countdown-section">
-        <h2>Odliczanie do następnego zadania:</h2>
-        <div id="countdown-timer" class="countdown-timer">00:00:00</div>
-    </div>
+        <p class="instruction-message">Zrób zdjęcie kartki (zeszytu) z rozwiązaniem i wyślij je na Teams :)</p>
 
-    <div id="task-modal" class="modal">
+    </div> <div id="task-modal" class="modal">
         <div class="modal-content">
             <span class="close-button">&times;</span>
             <h3 id="modal-title">Zadanie Dzień X</h3>
             <img id="task-image" src="" alt="Obrazek z zadaniem matematycznym" class="task-image">
-            <p class="modal-tip">Kliknij poza obrazkiem, aby zamknąć.</p>
+            <p class="modal-kliknij">Kliknij poza obrazkiem, aby zamknąć.</p>
         </div>
     </div>
+    
+    <script src="script.js"></script>
 
-<script src="script.js"></script>
 </body>
-
 </html>
-
-
-
