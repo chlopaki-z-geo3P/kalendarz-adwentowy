@@ -3,7 +3,12 @@ body {
     font-family: 'Arial', sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #0d47a1; /* Głęboki granatowy kolor tła */
+    /* ⬅️ ZMIENIONE: Dodane tło z wzorem z obrazka */
+    background-color: #1a2233; /* Główny kolor tła (ciemny granat/szarość) */
+    background-image: url('dots-pattern.png'); /* Upewnij się, że masz ten plik! */
+    background-repeat: repeat; 
+    background-size: 20px 20px; /* Dostosuj, jeśli wzór jest za duży lub za mały */
+
     color: #fff;
     text-align: center;
     min-height: 100vh;
@@ -18,7 +23,7 @@ body {
     max-width: 1000px;
     margin: 20px auto;
     padding: 20px;
-    background-color: rgba(255, 255, 255, 0.1); /* Lekko przezroczyste tło na granatowym */
+    background-color: rgba(255, 255, 255, 0.1); 
     border-radius: 15px;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
 }
@@ -56,7 +61,7 @@ h2 {
     }
 }
 
-/* --- OKIENKA KALENDARZA --- */
+/* --- OKIENKA KALENDARZA (BEZ ZMIAN W WYGLĄDZIE OKIENEK) --- */
 .calendar-window {
     height: 100px;
     aspect-ratio: 1 / 1;
@@ -75,15 +80,15 @@ h2 {
 
 /* 1. ZABLOKOWANE OKIENKO (PREZENT 🎁) */
 .calendar-window.locked {
-    background-color: #ececec; /* Jasnoszary/prawie biały, jak na Twoim zrzucie */
+    background-color: #ececec; /* Jasnoszary/prawie biały */
     cursor: not-allowed;
     opacity: 0.95;
-    color: #333; /* Ciemny tekst dla jasnego tła */
+    color: #333; 
 }
 
 /* 2. ODBLOKOWANE OKIENKO (TYLKO NUMER DNIA) */
 .calendar-window:not(.locked) {
-    background-color: #0d47a1; /* Kolor strony - "świeci się" */
+    background-color: #0d47a1; /* Kolor granatowy - "świeci się" na tle strony */
     cursor: pointer;
     opacity: 1;
 }
@@ -92,7 +97,7 @@ h2 {
 .calendar-window.open {
     background-color: #66bb6a; /* Zielony kolor po otwarciu */
     box-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
-    color: #fff; /* Biały tekst dla zielonego tła */
+    color: #fff; 
 }
 
 /* Efekt najechania myszą na aktywne okienko */
@@ -112,30 +117,26 @@ h2 {
 
 /* Pozycjonowanie numeru dla zablokowanego okienka (pod prezentem) */
 .calendar-window.locked .window-number {
-    margin-top: 5px; /* Odległość od ikony prezentu */
-    color: #333; /* Ciemny numer dla jasnego tła */
+    margin-top: 5px; 
+    color: #333; 
 }
 
 /* Pozycjonowanie numeru dla odblokowanego okienka (na środku) */
 .calendar-window:not(.locked) .window-number {
-    margin-top: 0; /* Centrujemy, gdy jest tylko numer */
-    color: #fff; /* Biały numer dla granatowego tła */
+    margin-top: 0; 
+    color: #fff; 
 }
 
-/* STYL DLA IKONY (Choinka/Prezent) */
+/* STYL DLA IKONY (Prezent) */
 .calendar-window .window-icon {
     font-size: 30px; 
     position: relative;
     z-index: 2;
-    margin-bottom: -5px; /* Przesunięcie ikony nad numer */
+    margin-bottom: -5px; 
 }
 
-/* Ukrycie ikony dla odblokowanych okienek */
-.calendar-window:not(.locked) .window-icon {
-    display: none;
-}
-
-/* Ukrycie etykiety "Zadanie" dla odblokowanych okienek */
+/* Ukrycie ikony i etykiety dla odblokowanych okienek */
+.calendar-window:not(.locked) .window-icon,
 .calendar-window:not(.locked) .window-label {
     display: none;
 }
@@ -144,7 +145,7 @@ h2 {
 .calendar-window.locked .window-label {
     font-size: 0.9em;
     font-weight: 500;
-    color: #666; /* Ciemniejszy kolor dla jasnego tła */
+    color: #666; 
     position: relative;
     z-index: 2;
     margin-top: 0px; 
@@ -153,16 +154,13 @@ h2 {
 
 /* --- SPECJALNY STYL DLA DNIA 24 (CZERWONY) --- */
 .calendar-window[data-day="24"].locked {
-    background-color: #c62828; /* Czerwony kolor */
-    color: #fff; /* Biały tekst dla czerwonego tła */
+    background-color: #c62828; 
+    color: #fff; 
 }
 
-.calendar-window[data-day="24"].locked .window-number {
-    color: #fff;
-}
-
+.calendar-window[data-day="24"].locked .window-number,
 .calendar-window[data-day="24"].locked .window-label {
-    color: #eee;
+    color: #fff;
 }
 
 /* --- MODAL (OKNO Z ZADANIEM) --- */
@@ -241,4 +239,13 @@ h2 {
     color: #ffeb3b; 
     font-weight: bold;
     letter-spacing: 2px;
+}
+
+/* NOWY STYL DLA KOMUNIKATU POD LICZNIKIEM */
+.instruction-message {
+    margin-top: 20px;
+    font-size: 1.1em;
+    font-weight: bold;
+    color: #ffd700; /* Żółty kolor, żeby był widoczny */
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
 }
