@@ -72,14 +72,9 @@ function generateCalendar() {
             windowDiv.addEventListener('click', () => openTask(task.day, task.image));
         }
 
-        // Ikona jest zawsze Choinka (🎄) w trybie testowym
-        const icon = '🎄'; 
-
-        // Zawartość okienka
+        // KONTENT W TRYBIE TESTOWYM: Zawsze tylko numer (bo wszystkie są odblokowane)
         windowDiv.innerHTML = `
-            <span class="window-icon">${icon}</span>
             <span class="window-number">${task.day}</span>
-            <span class="window-label">Zadanie</span>
         `;
         
         calendarContainer.appendChild(windowDiv);
@@ -101,6 +96,7 @@ function openTask(day, imagePath) {
     if (windowDiv) {
         windowDiv.classList.add('open');
         windowDiv.classList.remove('locked');
+        windowDiv.innerHTML = `<span class="window-number">${day}</span>`; // Upewniamy się, że jest tylko numer
     }
 }
 
@@ -108,14 +104,12 @@ function openTask(day, imagePath) {
  * Ustawia komunikat o trybie testowym.
  */
 function updateCountdown() {
-    // Sprawdzamy, czy element istnieje, zanim spróbujemy zmienić jego zawartość
     if (countdownSectionTitle) {
         countdownSectionTitle.textContent = 'Informacja:';
     }
     if (countdownTimer) {
         countdownTimer.textContent = 'Kalendarz jest w trybie podglądu (wszystkie dni otwarte).';
     }
-    // W trybie testowym nie uruchamiamy interwału odliczania
     if (typeof countdownInterval !== 'undefined') {
         clearInterval(countdownInterval);
     }
@@ -131,6 +125,8 @@ document.addEventListener('DOMContentLoaded', () => {
             const windowDiv = document.querySelector(`.calendar-window[data-day="${task.day}"]`);
             if (windowDiv) {
                 windowDiv.classList.add('open');
+                windowDiv.classList.remove('locked');
+                windowDiv.innerHTML = `<span class="window-number">${task.day}</span>`; // Upewniamy się, że jest tylko numer
             }
         }
     });
@@ -150,5 +146,5 @@ window.addEventListener('click', (event) => {
 
 // 3. Uruchomienie komunikatu testowego
 updateCountdown();
-// Definicja interwału jako null, by uniknąć błędów
-const countdownInterval = null;
+const countdownInterval = null; 
+```http://googleusercontent.com/image_generation_content/5
